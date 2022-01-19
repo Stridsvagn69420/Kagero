@@ -1,10 +1,17 @@
 package main
 
 import (
-	"fmt"
+	"Kagero/commands"
+	"os"
 )
 
 func main() {
-	fmt.Println("Hello, World! Joe Mama Biden!")
-	fmt.Println("Hello, Joe Mama is here!")
+	switch os.Args[1] {
+	case "install":
+		commands.Install(os.Args[2])
+	case "sync":
+		commands.Sync()
+	default:
+		// Print help and exit with 1
+	}
 }
