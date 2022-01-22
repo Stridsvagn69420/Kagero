@@ -7,5 +7,6 @@ The Docs™
 * [Updating](usage/Updating.md) - A detailed in-depth explaination on how to update packages and the manager itself
 
 # Specifications
+* [Orochi](specs/Orochi.md) - The repository layout that Kagero uses.
 * [Katana](specs/Katana.md) - Pointer-/Metadata files for [Orochi-like](https://github.com/Stridsvagn69420/Orochi) repositories
 * [Shuriken](specs/Shuriken.md) - Pointer-/Metadata files for Kagero packages
