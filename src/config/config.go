@@ -1,10 +1,12 @@
 package config
 
+type gitConfig struct {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	Token string `json:"token"`
+}
+
 type ConfigJSON struct {
-	Git struct {
-		Name  string `json:"name"`
-		Email string `json:"email"`
-		Token string `json:"token"`
-	} `json:"git"`
-	Repos []string `json:"repos"`
+	Git   gitConfig `json:"git"`
+	Repos []string  `json:"repos"`
 }

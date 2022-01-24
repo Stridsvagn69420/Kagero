@@ -23,5 +23,5 @@ Username and Password for cloning Git repositories. You only need authentication
 An array of URLs that point to a repos Katana files.
 
 # Locations
-Your local config resides in `~/.kagero/config.json`, while the global one is located in `/etc/kagero/config.json`.  
+Your local config resides in `~/.kagero/config.json`, while the global one is located in `/opt/kagero/config.json`.  
 Windows doesn't have any global options or paths, so it's config is in `~/AppData/Local/Kagero/config.json`

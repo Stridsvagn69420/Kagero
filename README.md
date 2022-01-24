@@ -33,3 +33,15 @@ Coming soon.
 
 ## Managing repositories
 Coming soon.
+
+# FAQ
+## Why is it called Kagero?
+1. I'm obsessed with Fire Emblem and I thought [Kagero](https://fireemblem.fandom.com/wiki/Kagero) would fit.
+2. It sounds a bit like Rust's package manager [Cargo](https://crates.io/).
+
+## Should I still use my system package manager (pacman, apt, rpm, etc.)
+**Yes, absolutely!** Your system package manager is far more advanced and still neccesary for updating the kernel/core elements. Currently Kagero is only for non-system software like games, applications that don't extend the core operating system (or have essential files in system folders), or fun projects.  
+**It's not ready for being a system package manager yet!**
+* Something that needs deep access might work, but would be complicated since every package is stored in its own folder, sometimes globally or locally.  
+* I also doubt you'll get first party package support for something like the Go SDK, .NET SDK, Flutter/Dart SDK, Rust SDK - maybe with some projects on GitHub like [btop++](https://github.com/aristocratos/btop), [yt-dlp](https://github.com/yt-dlp/yt-dlp), [YT-Spammer-Purge](https://github.com/ThioJoe/YT-Spammer-Purge), etc.  
+* The only realistic first-party support would be with projects I made and maybe with some of my friends' projects.
