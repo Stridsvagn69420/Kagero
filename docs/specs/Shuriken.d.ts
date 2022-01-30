@@ -7,7 +7,7 @@ interface Pointer {
 
 interface Data {
     path: string | `git+${string}` | `http+${string}`,
-    type: "exe" | "aur" | "zip" | "tar+xz" | "tar+gzip"
+    type: "exe" | "zip" | "tar+xz" | "tar+gzip"
 }
 
 export type Shuriken = Pointer[];

@@ -31,7 +31,7 @@ Note: `platform`, `arch`, and `path` are used for Kagero's URL Builder: `${ROOT}
 A package ID that will be used to name the folder your package resides in.
 
 ## hash
-The SHA-256 hash value of the data that will be downloaded. This will make sure everything was downloaded properly. You can ignore this for Git-URLs.
+The SHA-256 hash value of the data that will be downloaded. This will make sure everything was downloaded properly. Use the latest commit hash for Git Packages.
 
 ## platform
 The OS type the package was built for. `linux` primarily means Linux, but it should be compatible with FreeBSD, OpenBSD, and every other Unix-like systems
@@ -47,8 +47,9 @@ The filename of the executable/archive inside `${ROOT}/${platform}/${arch}` to b
 
 ### type
 The type of data downloaded:
+* `git`: A package downloaded via Git
+* `git:branch` The same as above, but with a given branch.
 * `exe`: Just a stanalone single-file executable
-* `aur`: (Arch Linux only) A package of the [Arch User Repositor](https://aur.archlinux.org/) or like one.
 * `zip`: A .zip file with its content having a file tree like described [in the Package section](#packages)
 * `tar+gzip`: Like above but as a .tar.gz file.
 * `tar+xz`: Like above but as a .tar.xz file.
@@ -56,14 +57,9 @@ The type of data downloaded:
 # Packages
 Packages can look like whatever they want to. They just need 2 files: `deps.txt` and `pathbin.txt`
 
-## deps.txt
-A list of commands required to be installed/inside PATH:
-```
-git
-gpg
-node
-npm
-```
+## postinstall.sh/posinstall.ps1
+A script that will be executed directly after the package is installed or updated.
+Use `postinstall.sh` for Unix-like systems and `postinstall.ps1` for Windows packages, but you can include both too.
 
 ## pathbin.txt
 A list of files to be symlinked into Kagero's PATH folder, similar to a `.gitignore`:
