@@ -64,7 +64,7 @@
             "type": "shell",
             "args": [
                 "install",
-                "${workspaceFolder}/src/kagero.go"
+                "${workspaceFolder}/kagero.go"
             ],
             "group": "build",
             "presentation": {
@@ -79,7 +79,7 @@
                 "build",
                 "-o",
                 "${workspaceFolder}/build/${go.binaryName}",
-				"${workspaceFolder}/src/kagero.go"
+				"${workspaceFolder}/kagero.go"
 			],
             "group": "build",
             "presentation": {
@@ -92,7 +92,7 @@
             "type": "shell",
             "args": [
                 "run",
-                "${workspaceFolder}/src/kagero.go",
+                "${workspaceFolder}/kagero.go",
             ],
             "group": "test",
             "presentation": {

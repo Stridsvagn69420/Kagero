@@ -1,11 +1,8 @@
 install:
-	@go install src/kagero.go
+	@go install kagero.go
 
-test:
-	@go run src/kagero.go
+run:
+	@go run kagero.go
 
-windows:
-	go build -o build/kagero.exe src/kagero.go
-
-linux:
-	go build -o build/kagero src/kagero.go
+build:
+	go build -o build/ kagero.go
