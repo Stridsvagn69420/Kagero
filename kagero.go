@@ -1,8 +1,9 @@
 package main
 
 import (
-	"Kagero/commands"
 	"os"
+
+	"github.com/Stridsvagn69420/Kagero/commands"
 )
 
 func main() {
