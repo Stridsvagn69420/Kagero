@@ -1,0 +1,25 @@
+[package]
+name = "kagero"
+version = "0.1.0"
+edition = "2021"
+authors = ["Stridsvagn69420 (https://github.com/Stridsvagn69420)"]
+description = "A cross-platform universal and easy to use package manager"
+readme = "README.md"
+repository = "https://github.com/Stridsvagn69420/Kagero"
+license = "eupl-1.2"
+exclude = ["/target", "/.vscode/", "/.github/"]
+
+[lib]
+name = "kagero"
+path = "src/lib.rs"
+
+[[bin]]
+name = "kagero"
+path = "src/main.rs"
+
+[profile.release]
+lto = true
+strip = true
+debug = true
+
+[dependencies]
