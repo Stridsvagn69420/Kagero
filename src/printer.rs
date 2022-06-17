@@ -1,4 +1,4 @@
-use std::{io::{Write, Stdout, stdout, Stderr, stderr/*, Stdin, stdin*/}};
+use std::io::{Write, Stdout, stdout, Stderr, stderr/*, Stdin, stdin*/};
 
 pub struct Printer {
     stdout: Stdout,
@@ -22,7 +22,7 @@ impl Printer {
     }
     // --- Stdout ---
     pub fn print(&mut self, msg: &str, color: Colors) {
-        let _ = self.stdout.write_all(color.as_bytes());
+        let _ = self.stdout.write_all(color.as_ref());
         let _ = self.stdout.write_all(msg.as_bytes());
         let _ = self.stdout.write_all(RESET);
         let _ = self.stdout.flush();
@@ -31,7 +31,7 @@ impl Printer {
         self.print(format!("{}\n", msg).as_str(), color)
     }
     pub fn write(&mut self, msg: &str) {
-        let _ = self.stdout.write(msg.as_bytes());
+        let _ = self.stdout.write_all(msg.as_bytes());
         let _ = self.stdout.write_all(RESET);
         let _ = self.stdout.flush();
     }
@@ -41,8 +41,8 @@ impl Printer {
 
     // --- Stderr ---
     pub fn error(&mut self, msg: &str, color: Colors) {
-        let _ = self.stderr.write(color.as_bytes());
-        let _ = self.stderr.write(msg.as_bytes());
+        let _ = self.stderr.write_all(color.as_ref());
+        let _ = self.stderr.write_all(msg.as_bytes());
         let _ = self.stderr.write_all(RESET);
         let _ = self.stderr.flush();
     }
@@ -50,7 +50,7 @@ impl Printer {
         self.error(format!("{}\n", msg).as_str(), color);
     }
     pub fn err(&mut self, msg: &str) {
-        let _ = self.stderr.write(msg.as_bytes());
+        let _ = self.stderr.write_all(msg.as_bytes());
         let _ = self.stderr.write_all(RESET);
         let _ = self.stderr.flush();
     }
@@ -80,8 +80,8 @@ pub enum Colors {
     WhiteBright
 }
 
-impl Colors {
-    pub fn as_bytes(&self) -> &'static [u8] {
+impl AsRef<[u8]> for Colors {
+    fn as_ref(&self) -> &'static [u8] {
         match self {
             Colors::None => b"",
             // Default
@@ -102,6 +102,32 @@ impl Colors {
             Colors::MagentaBright => b"\x1b[95m",
             Colors::CyanBright => b"\x1b[96m",
             Colors::WhiteBright => b"\x1b[97m"
+        }
+    }
+}
+
+impl AsRef<str> for Colors {
+    fn as_ref(&self) -> &'static str {
+        match self {
+            Colors::None => "",
+            // Default
+            Colors::Black => "\x1b[30m",
+            Colors::Red => "\x1b[31m",
+            Colors::Green => "\x1b[32m",
+            Colors::Yellow => "\x1b[33m",
+            Colors::Blue => "\x1b[34m",
+            Colors::Magenta => "\x1b[35m",
+            Colors::Cyan => "\x1b[36m",
+            Colors::White => "\x1b[37m",
+            // Bright
+            Colors::BlackBright => "\x1b[90m",
+            Colors::RedBright => "\x1b[91m",
+            Colors::GreenBright => "\x1b[92m",
+            Colors::YellowBright => "\x1b[93m",
+            Colors::BlueBright => "\x1b[94m",
+            Colors::MagentaBright => "\x1b[95m",
+            Colors::CyanBright => "\x1b[96m",
+            Colors::WhiteBright => "\x1b[97m"
         }
     }
 }
