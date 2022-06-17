@@ -9,6 +9,13 @@ repository = "https://github.com/Stridsvagn69420/Kagero"
 license = "eupl-1.2"
 exclude = ["/target", "/.vscode/", "/.github/"]
 
+[dependencies]
+
+
+[features]
+default = ["printer"]
+printer = []
+
 [lib]
 name = "kagero"
 path = "src/lib.rs"
@@ -21,5 +28,3 @@ path = "src/main.rs"
 lto = true
 strip = true
 debug = true
-
-[dependencies]
