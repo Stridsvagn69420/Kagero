@@ -1,4 +1,4 @@
-use std::io::{Write, Stdout, stdout, Stderr, stderr/*, Stdin, stdin*/};
+use std::{io::{Write, Stdout, stdout, Stderr, stderr/*, Stdin, stdin*/}};
 
 pub struct Printer {
     stdout: Stdout,
@@ -22,17 +22,13 @@ impl Printer {
     }
     // --- Stdout ---
     pub fn print(&mut self, msg: &str, color: Colors) {
-        let _ = self.stdout.write(color.as_bytes());
-        let _ = self.stdout.write(msg.as_bytes());
+        let _ = self.stdout.write_all(color.as_bytes());
+        let _ = self.stdout.write_all(msg.as_bytes());
         let _ = self.stdout.write_all(RESET);
         let _ = self.stdout.flush();
     }
     pub fn println(&mut self, msg: &str, color: Colors) {
-        let _ = self.stdout.write(color.as_bytes());
-        let _ = self.stdout.write(msg.as_bytes());
-        let _ = self.stdout.write(RESET);
-        let _ = self.stdout.write_all(b"\n");
-        let _ = self.stdout.flush();
+        self.print(format!("{}\n", msg).as_str(), color)
     }
     pub fn write(&mut self, msg: &str) {
         let _ = self.stdout.write(msg.as_bytes());
@@ -40,10 +36,7 @@ impl Printer {
         let _ = self.stdout.flush();
     }
     pub fn writeln(&mut self, msg: &str) {
-        let _ = self.stdout.write(msg.as_bytes());
-        let _ = self.stdout.write(RESET);
-        let _ = self.stdout.write_all(b"\n");
-        let _ = self.stdout.flush();
+        self.write(format!("{}\n", msg).as_str())
     }
 
     // --- Stderr ---
@@ -54,11 +47,7 @@ impl Printer {
         let _ = self.stderr.flush();
     }
     pub fn errorln(&mut self, msg: &str, color: Colors) {
-        let _ = self.stderr.write(color.as_bytes());
-        let _ = self.stderr.write(msg.as_bytes());
-        let _ = self.stderr.write(RESET);
-        let _ = self.stderr.write_all(b"\n");
-        let _ = self.stderr.flush();
+        self.error(format!("{}\n", msg).as_str(), color);
     }
     pub fn err(&mut self, msg: &str) {
         let _ = self.stderr.write(msg.as_bytes());
@@ -66,10 +55,7 @@ impl Printer {
         let _ = self.stderr.flush();
     }
     pub fn errln(&mut self, msg: &str) {
-        let _ = self.stderr.write(msg.as_bytes());
-        let _ = self.stderr.write(RESET);
-        let _ = self.stderr.write_all(b"\n");
-        let _ = self.stderr.flush();
+        self.err(format!("{}\n", msg).as_str());
     }
 }
 
@@ -95,29 +81,6 @@ pub enum Colors {
 }
 
 impl Colors {
-    pub fn as_str(&self) -> &'static str {
-        match self {
-            Colors::None => "",
-            // Default
-            Colors::Black => "\x1b[30m",
-            Colors::Red => "\x1b[31m",
-            Colors::Green => "\x1b[32m",
-            Colors::Yellow => "\x1b[33m",
-            Colors::Blue => "\x1b[34m",
-            Colors::Magenta => "\x1b[35m",
-            Colors::Cyan => "\x1b[36m",
-            Colors::White => "\x1b[37m",
-            // Bright
-            Colors::BlackBright => "\x1b[90m",
-            Colors::RedBright => "\x1b[91m",
-            Colors::GreenBright => "\x1b[92m",
-            Colors::YellowBright => "\x1b[93m",
-            Colors::BlueBright => "\x1b[94m",
-            Colors::MagentaBright => "\x1b[95m",
-            Colors::CyanBright => "\x1b[96m",
-            Colors::WhiteBright => "\x1b[97m",
-        }
-    }
     pub fn as_bytes(&self) -> &'static [u8] {
         match self {
             Colors::None => b"",
