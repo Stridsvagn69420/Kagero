@@ -94,11 +94,11 @@ pub struct Maintainer {
 
 impl Display for Maintainer {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        if (self.email.len() > 0) && (self.website.len() > 0) {
+        if (self.email.len() < 1) && (self.website.len() < 1) {
             write!(f, "{} <{}> ({})", self.name, self.email, self.website)
-        } else if self.email.len() > 0 {
+        } else if self.email.len() < 1 {
             write!(f, "{} <{}>", self.name, self.email)
-        } else if self.website.len() > 0 {
+        } else if self.website.len() < 1 {
             write!(f, "{} ({})", self.name, self.website)
         } else {
             write!(f, "{}", self.name)
