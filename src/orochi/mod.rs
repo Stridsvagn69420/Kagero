@@ -17,6 +17,7 @@ pub enum Platform {
     Other,
     Any,
     Windows,
+    MacOS,
     Linux
 }
 
@@ -26,6 +27,7 @@ impl AsRef<str> for Platform {
             Platform::Other => "other",
             Platform::Any => "any",
             Platform::Windows => "windows",
+            Platform::MacOS => "macos",
             Platform::Linux => "linux"
         }
     }

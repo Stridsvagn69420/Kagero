@@ -15,9 +15,10 @@ serde = { version = "1.0", features = ["derive"], optional = true }
 serde_json = { version = "1.0", optional = true }
 
 [features]
-default = ["printer", "orochi"]
+default = ["printer", "orochi-repo"]
 printer = []
-orochi = ["reqwest", "serde", "serde_json"]
+orochi = ["serde", "serde_json"]
+orochi-repo = ["orochi", "reqwest"]
 
 [lib]
 name = "kagero"
