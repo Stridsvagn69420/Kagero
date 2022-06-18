@@ -1,6 +1,9 @@
 use std::fmt::Display;
 use serde::{Deserialize, Serialize};
 
+#[cfg(feature = "orochi-repo")]
+pub mod repo;
+
 #[derive(Serialize, Deserialize)]
 pub struct Shuriken {
     pub hash: String,
