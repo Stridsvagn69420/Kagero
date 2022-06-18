@@ -4,3 +4,6 @@ pub fn test() {
 
 #[cfg(feature = "printer")]
 pub mod printer;
+
+#[cfg(feature = "orochi")]
+pub mod orochi;
