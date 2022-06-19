@@ -1,66 +1,191 @@
-use std::io::{Write, Stdout, stdout, Stderr, stderr/*, Stdin, stdin*/};
+use std::io::{Write, Stdout, stdout, Stderr, stderr, Stdin, stdin};
 
+
+/// Printer to print to stdout and stderr.
+/// 
+/// 
 pub struct Printer {
     stdout: Stdout,
     stderr: Stderr,
-    //stdin: Stdin,
+    stdin: Stdin,
 }
 
 impl Printer {
+    /// Create a new printer with default stdout, stderr and stdin
+    /// 
+    /// Printer with [stdout], [stderr] and [stdin] from the standard library.
     pub fn default() -> Printer {
         Printer {
             stdout: stdout(),
             stderr: stderr(),
-            //stdin: stdin(),
+            stdin: stdin(),
         }
     }
-    pub fn new(output: Stdout, error: Stderr/*, input: Stdin*/) -> Printer {
+
+    /// Create a new printer with custom stdout, stderr and stdin
+    /// 
+    /// Printer with a custom [Stdout], [Stderr] and [Stdin].
+    pub fn new(output: Stdout, error: Stderr, input: Stdin) -> Printer {
         Printer {
             stdout: output,
             stderr: error,
-            //stdin: input,
+            stdin: input,
         }
     }
-    // --- Stdout ---
+
+    /// Prints to stdout with color
+    /// 
+    /// # Arguments
+    /// * `msg` - The message to print as a [str]
+    /// * `color` - The color to print the message in as a [Color](Colors)
     pub fn print(&mut self, msg: &str, color: Colors) {
         let _ = self.stdout.write_all(color.as_ref());
         let _ = self.stdout.write_all(msg.as_bytes());
         let _ = self.stdout.write_all(RESET);
         let _ = self.stdout.flush();
     }
+
+    /// Prints to stdout with color and newline
+    /// 
+    /// # Arguments
+    /// * `msg` - The message to print as a [str]
+    /// * `color` - The color to print the message in as a [Color](Colors)
     pub fn println(&mut self, msg: &str, color: Colors) {
         self.print(format!("{}\n", msg).as_str(), color)
     }
+
+    /// Prints to stdout
+    /// 
+    /// # Arguments
+    /// * `msg` - The message to print as a [str]
     pub fn write(&mut self, msg: &str) {
         let _ = self.stdout.write_all(msg.as_bytes());
         let _ = self.stdout.write_all(RESET);
         let _ = self.stdout.flush();
     }
+
+    /// Prints to stdout with newline
+    /// 
+    /// # Arguments
+    /// * `msg` - The message to print as a [str]
     pub fn writeln(&mut self, msg: &str) {
         self.write(format!("{}\n", msg).as_str())
     }
 
-    // --- Stderr ---
+    /// Print to stderr with color
+    /// 
+    /// # Arguments
+    /// * `msg` - Message to print as a [str]
+    /// * `color` - Color to print with from the [Colors] enum
     pub fn error(&mut self, msg: &str, color: Colors) {
         let _ = self.stderr.write_all(color.as_ref());
         let _ = self.stderr.write_all(msg.as_bytes());
         let _ = self.stderr.write_all(RESET);
         let _ = self.stderr.flush();
     }
+
+    /// Print to stderr with color and newline
+    /// 
+    /// # Arguments
+    /// * `msg` - Message to print as a [str]
+    /// * `color` - Color to print with from the [Colors] enum
     pub fn errorln(&mut self, msg: &str, color: Colors) {
         self.error(format!("{}\n", msg).as_str(), color);
     }
+
+    /// Print to stderr
+    /// 
+    /// # Arguments
+    /// * `msg` - Message to print as a [str]
     pub fn err(&mut self, msg: &str) {
         let _ = self.stderr.write_all(msg.as_bytes());
         let _ = self.stderr.write_all(RESET);
         let _ = self.stderr.flush();
     }
+
+    /// Print to stderr and newline
+    /// 
+    /// # Arguments
+    /// * `msg` - Message to print as a [str]
     pub fn errln(&mut self, msg: &str) {
         self.err(format!("{}\n", msg).as_str());
+    }
+
+    /// Reads from stdin
+    /// 
+    /// This function ignores any errors with non UTF-8 bytes since this shouldn't happen in a console.
+    /// If you use a custom stdin, it's up to you to make sure it's UTF-8.
+    /// You can also directly get [Printer::stdin](Stdin) and use `read_line` on it, if you have to check for non-UTF-8 bytes.
+    pub fn readln(&mut self) -> String {
+        let mut input = String::new();
+        let _ = self.stdin.read_line(&mut input);
+        input
+    }
+
+    /// Promts the user for input on the same line
+    /// 
+    /// # Arguments
+    /// * `msg` - Message to print as a [str]
+    pub fn ask(&mut self, msg: &str) -> String{
+        self.prompt(msg, Colors::None)
+    }
+
+    /// Promts the user for input on a new line
+    ///
+    /// # Arguments
+    /// * `msg` - Message to print as a [str]
+    pub fn askln(&mut self, msg: &str) -> String{
+        self.promptln(msg, Colors::None)
+    }
+
+    /// Prompts the user for input on the same line with a color
+    /// 
+    /// # Arguments
+    /// * `msg` - Message to print as a [str]
+    /// * `color` - Color to print with from the [Colors] enum
+    pub fn prompt(&mut self, msg: &str, color: Colors) -> String {
+        self.write(color.as_ref());
+        self.write(msg);
+        self.write(": ");
+        self.readln()
+    }
+
+    /// Prompts the user for input on a new line with color
+    /// 
+    /// # Arguments
+    /// * `msg` - Message to print as a [str]
+    /// * `color` - Color to print with from the [Colors] enum
+    pub fn promptln(&mut self, msg: &str, color: Colors) -> String {
+        self.write(color.as_ref());
+        self.write(msg);
+        self.writeln(":");
+        self.readln()
     }
 }
 
 const RESET: &'static [u8] = b"\x1b[0m";
+
+/// Terminal Colors
+/// 
+/// Enum of ASCII escape codes to represent terminal colors.
+/// 
+/// # Examples
+/// 
+/// Printing a simple message in green
+/// 
+/// ```
+/// use kagero::printer::{Printer, Colors};
+/// let mut printer = Printer::default();
+/// printer.println("Hello, world!", Colors::Green);
+/// ```
+/// 
+/// Printing a simple message in bright red
+/// 
+/// ```
+/// use kagero::printer::{Printer, Colors};
+/// let mut printer = Printer::default();
+/// printer.println("Hello, world!", Colors::BrightRed);
+/// ```
 pub enum Colors {
     None,
     Black,
