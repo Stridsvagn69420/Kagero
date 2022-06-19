@@ -11,7 +11,7 @@ repository = "https://github.com/Stridsvagn69420/Kagero"
 homepage = "https://github.com/Stridsvagn69420/Kagero"
 documentation = "https://docs.rs/kagero"
 license = "eupl-1.2"
-exclude = ["/target", "/.vscode/", "/.github/", "/SECURITY.md"]
+exclude = ["/target", "/.vscode/", "/.github/", "/target/", "/SECURITY.md"]
 
 [dependencies]
 reqwest = { version = "0.11.11", optional = true }
