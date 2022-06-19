@@ -5,6 +5,7 @@ pub struct Printer {
     stderr: Stderr,
     //stdin: Stdin,
 }
+
 impl Printer {
     pub fn default() -> Printer {
         Printer {
