@@ -43,7 +43,7 @@ pub struct Shuriken {
     /// 
     /// Path to the package's content.
     /// If it's just a filename, the absolute path will be ${ROOT}/${ARCH}/${PLATFORM}/${FILENAME},
-    /// e.g. https://orochi.mydomain.com/x86_64/linux/mypackage.tar.gz
+    /// e.g. <https://orochi.mydomain.com/x86_64/linux/mypackage.tar.gz>
     pub path: String,
 
     /// Package Type
@@ -203,7 +203,7 @@ pub struct Katana {
     /// 
     /// The base for all requests.
     /// This allows you to have a local Katana file that points to a repository online.
-    /// So applicationxy.exe for windows x86_64 will be located at https://orochi.mydomain.com/windows/x86_64/applicationxy.exe if the root is set to https://orochi.mydomain.com.
+    /// So applicationxy.exe for windows x86_64 will be located at <https://orochi.mydomain.com/windows/x86_64/applicationxy.exe> if the root is set to <https://orochi.mydomain.com>.
     pub root: String,
 
     /// Website related to the repository
