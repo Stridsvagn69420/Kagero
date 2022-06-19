@@ -10,7 +10,7 @@ readme = "README.md"
 repository = "https://github.com/Stridsvagn69420/Kagero"
 homepage = "https://github.com/Stridsvagn69420/Kagero"
 documentation = "https://docs.rs/kagero"
-license = "eupl-1.2"
+license = "EUPL-1.2"
 exclude = ["/target", "/.vscode/", "/.github/", "/target/", "/SECURITY.md"]
 
 [dependencies]
