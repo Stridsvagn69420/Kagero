@@ -1,21 +1,26 @@
 # Kagero
-A cross-platform universal and easy to use package manager
+A cross-platform universal and easy to use package manager.  
+This crate is a binary as well as a library and features Kagero-specific filesystem utils and Orochi-specific data types and utils, but also a general-purpose Printer utility to read from and write to the command-line, with color too.
 
 # Installing
 ## Cargo (Rust SDK)
 Run `cargo install kagero` and you're done! If you haven't already, add `$HOME/.cargo/bin` to your PATH.
+
+## Pacman (Arch Linux, Artix Linux, Manjaro)
+Coming soon.
+
+## XBPS (Void Linux)
+
+## APT (Debian, Ubuntu, Linux Mint)
+Coming soon.
+
+## DNF (Fedora, RHEL)
 
 ## Compiling from Source (Rust SDK)
 1. Clone the repo with `git clone https://github.com/Stridsvagn69420/Kagero.git`
 2. Either directly install it: `cargo install --path Kagero` (Make sure `$HOME/.cargo/bin` is in your PATH)
 3. OR Go into the newly created folder with `cd Kagero`
 4. And run `cargo build --release` and copy the binary located at `./target/release/kagero[.exe]`
-
-## APT
-Coming soon.
-
-## Pacman
-Coming soon.
 
 # Usage
 WIP.
