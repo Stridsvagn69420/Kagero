@@ -5,6 +5,21 @@ use std::io::{Write, Stdout, stdout, Stderr, stderr, Stdin, stdin};
 /// 
 /// This is a simple wrapper around [Stdout], [Stderr] and [Stdin],
 /// but featues all the tools you need for printing to the terminal and reading user input.
+/// 
+/// # Examples
+/// Printing with color to stderr:
+/// ```
+/// use kagero::printer::{Printer, Colors};
+/// let mut printer = Printer::default();
+/// printer.errorln("This is a BIG error!", Colors::RedBright)
+/// ```
+/// 
+/// Reading user input from the same file:
+/// ```
+/// use kagero::printer::{Printer, Colors};
+/// let mut printer = Printer::default();
+/// let input = printer.prompt("Enter your name: ", Colors::GreenBright);
+/// ```
 pub struct Printer {
     pub stdout: Stdout,
     pub stderr: Stderr,
@@ -181,7 +196,7 @@ const RESET: &'static [u8] = b"\x1b[0m";
 /// ```
 /// use kagero::printer::{Printer, Colors};
 /// let mut printer = Printer::default();
-/// printer.println("Hello, world!", Colors::BrightRed);
+/// printer.println("Hello, world!", Colors::RedBright);
 /// ```
 pub enum Colors {
     None,
