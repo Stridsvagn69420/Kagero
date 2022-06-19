@@ -2,6 +2,9 @@ use std::fmt::{Display, Formatter, Result};
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "orochi-repo")]
+/// Orochi Repository utilities
+/// 
+/// This module features utilities for interacting with an Orochi repository.
 pub mod repo;
 
 /// Metadata for a package.

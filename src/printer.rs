@@ -1,13 +1,14 @@
 use std::io::{Write, Stdout, stdout, Stderr, stderr, Stdin, stdin};
 
 
-/// Printer to print to stdout and stderr.
+/// Printer to print to stdout and stderr and fead from stdin.
 /// 
-/// 
+/// This is a simple wrapper around [Stdout], [Stderr] and [Stdin],
+/// but featues all the tools you need for printing to the terminal and reading user input.
 pub struct Printer {
-    stdout: Stdout,
-    stderr: Stderr,
-    stdin: Stdin,
+    pub stdout: Stdout,
+    pub stderr: Stderr,
+    pub stdin: Stdin,
 }
 
 impl Printer {
@@ -126,7 +127,7 @@ impl Printer {
     /// 
     /// # Arguments
     /// * `msg` - Message to print as a [str]
-    pub fn ask(&mut self, msg: &str) -> String{
+    pub fn ask(&mut self, msg: &str) -> String {
         self.prompt(msg, Colors::None)
     }
 
@@ -144,10 +145,8 @@ impl Printer {
     /// * `msg` - Message to print as a [str]
     /// * `color` - Color to print with from the [Colors] enum
     pub fn prompt(&mut self, msg: &str, color: Colors) -> String {
-        self.write(color.as_ref());
-        self.write(msg);
-        self.write(": ");
-        self.readln()
+        self.print(format!("{}: ", msg).as_str(), color);
+        self.readln().trim().to_string()
     }
 
     /// Prompts the user for input on a new line with color
@@ -156,10 +155,8 @@ impl Printer {
     /// * `msg` - Message to print as a [str]
     /// * `color` - Color to print with from the [Colors] enum
     pub fn promptln(&mut self, msg: &str, color: Colors) -> String {
-        self.write(color.as_ref());
-        self.write(msg);
-        self.writeln(":");
-        self.readln()
+        self.println(format!("{}:", msg).as_str(), color);
+        self.readln().trim().to_string()
     }
 }
 
