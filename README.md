@@ -10,6 +10,7 @@ Run `cargo install kagero` and you're done! If you haven't already, add `$HOME/.
 Coming soon.
 
 ## XBPS (Void Linux)
+Coming soon.
 
 ## APT (Debian, Ubuntu, Linux Mint)
 Coming soon.
