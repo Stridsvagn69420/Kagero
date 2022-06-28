@@ -31,8 +31,7 @@ WIP.
 # The Kagero-Package-Manager Project
 ## History
 The Kagero Package Manager originally started as `jitter` and was supposed to be written in Dart to use Flutter as a GUI later. This dropped later because I discovered Go and Dart didn't really fit anymore. I then decided to ditch Go - I didn't even really start with it - in favor of Rust.  
-The main reason why I wanted to make "jitter" was because shipping a multi-file app wtihout a package manager (Windows doesn't have any and some Linux distros have a complicated way of setting up a repository) is pain. The "jit" stood for Just-in-Time, because I wanted to package [my Twitter downloader](https://github.com/Stridsvagn69420/Tweet-DL).  
-If you're curious, 
+The main reason why I wanted to make "jitter" was because shipping a multi-file app wtihout a package manager (Windows doesn't have any and some Linux distros have a complicated way of setting up a repository) is pain. The "jit" stood for Just-in-Time, because I wanted to package [my Twitter downloader](https://github.com/Stridsvagn69420/Tweet-DL).
 
 ## Comparision
 |                | [Kagero](https://github.com/Stridsvagn69420/Kagero)                               | [Orochi](https://github.com/Stridsvagn69420/Orochi)                                   | [Kaze](https://github.com/Stridsvagn69420/Kaze)                  | [libkagero](https://github.com/Stridsvagn69420/libkagero)              | [DDroid](https://github.com/Stridsvagn69420/DDroid)            |
