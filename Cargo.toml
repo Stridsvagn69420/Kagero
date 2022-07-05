@@ -14,16 +14,20 @@ license = "EUPL-1.2"
 exclude = ["/target", "/.vscode/", "/.github/", "/target/", "/SECURITY.md"]
 
 [dependencies]
-reqwest = { version = "0.11.11", optional = true }
+# Orochi Meta
 serde = { version = "1.0", features = ["derive"], optional = true }
 serde_json = { version = "1.0", optional = true }
+# Orochi Utils
+reqwest = { version = "0.11.11", optional = true }
 rusqlite = { version = "0.27.0", features = ["bundled"], optional = true }
+ftp = { version = "3.0.1", optional = true }
+ssh2 = { version = "0.9.3", optional = true}
 
 [features]
 default = ["printer", "orochi-repo"]
 printer = []
 orochi = ["serde", "serde_json"]
-orochi-repo = ["orochi", "reqwest", "rusqlite"]
+orochi-repo = ["orochi", "reqwest", "ftp", "ssh2"]
 
 [lib]
 name = "kagero"
