@@ -17,12 +17,13 @@ exclude = ["/target", "/.vscode/", "/.github/", "/target/", "/SECURITY.md"]
 reqwest = { version = "0.11.11", optional = true }
 serde = { version = "1.0", features = ["derive"], optional = true }
 serde_json = { version = "1.0", optional = true }
+rusqlite = { version = "0.27.0", features = ["bundled"], optional = true }
 
 [features]
 default = ["printer", "orochi-repo"]
 printer = []
 orochi = ["serde", "serde_json"]
-orochi-repo = ["orochi", "reqwest"]
+orochi-repo = ["orochi", "reqwest", "rusqlite"]
 
 [lib]
 name = "kagero"
