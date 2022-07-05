@@ -1,10 +1,9 @@
-use std::io::{Write, Stdout, stdout, Stderr, stderr, Stdin, stdin};
-
+use std::io::{Write, Stdout, stdout, Stderr, stderr};
 
 /// Printer to print to stdout and stderr and fead from stdin.
 /// 
-/// This is a simple wrapper around [Stdout], [Stderr] and [Stdin],
-/// but featues all the tools you need for printing to the terminal and reading user input.
+/// This is a simple wrapper around [Stdout] and [Stderr],
+/// but featues all the tools you need for printing to the terminal.
 /// 
 /// # Examples
 /// Printing with color to stderr:
@@ -13,39 +12,29 @@ use std::io::{Write, Stdout, stdout, Stderr, stderr, Stdin, stdin};
 /// let mut printer = Printer::default();
 /// printer.errorln("This is a BIG error!", Colors::RedBright)
 /// ```
-/// 
-/// Reading user input from the same file:
-/// ```
-/// use kagero::printer::{Printer, Colors};
-/// let mut printer = Printer::default();
-/// let input = printer.prompt("Enter your name: ", Colors::GreenBright);
-/// ```
 pub struct Printer {
     pub stdout: Stdout,
     pub stderr: Stderr,
-    pub stdin: Stdin,
 }
 
 impl Printer {
     /// Create a new printer with default stdout, stderr and stdin
     /// 
-    /// Printer with [stdout], [stderr] and [stdin] from the standard library.
+    /// Printer with [stdout] and [stderr] from the standard library.
     pub fn default() -> Printer {
         Printer {
             stdout: stdout(),
-            stderr: stderr(),
-            stdin: stdin(),
+            stderr: stderr()
         }
     }
 
     /// Create a new printer with custom stdout, stderr and stdin
     /// 
-    /// Printer with a custom [Stdout], [Stderr] and [Stdin].
-    pub fn new(output: Stdout, error: Stderr, input: Stdin) -> Printer {
+    /// Printer with a custom [Stdout] and [Stderr].
+    pub fn new(output: Stdout, error: Stderr) -> Printer {
         Printer {
             stdout: output,
             stderr: error,
-            stdin: input,
         }
     }
 
@@ -125,53 +114,6 @@ impl Printer {
     /// * `msg` - Message to print as a [str]
     pub fn errln(&mut self, msg: &str) {
         self.err(format!("{}\n", msg).as_str());
-    }
-
-    /// Reads from stdin
-    /// 
-    /// This function ignores any errors with non UTF-8 bytes since this shouldn't happen in a console.
-    /// If you use a custom stdin, it's up to you to make sure it's UTF-8.
-    /// You can also directly get [Printer::stdin](Stdin) and use `read_line` on it, if you have to check for non-UTF-8 bytes.
-    pub fn readln(&mut self) -> String {
-        let mut input = String::new();
-        let _ = self.stdin.read_line(&mut input);
-        input
-    }
-
-    /// Promts the user for input on the same line
-    /// 
-    /// # Arguments
-    /// * `msg` - Message to print as a [str]
-    pub fn ask(&mut self, msg: &str) -> String {
-        self.prompt(msg, Colors::None)
-    }
-
-    /// Promts the user for input on a new line
-    ///
-    /// # Arguments
-    /// * `msg` - Message to print as a [str]
-    pub fn askln(&mut self, msg: &str) -> String{
-        self.promptln(msg, Colors::None)
-    }
-
-    /// Prompts the user for input on the same line with a color
-    /// 
-    /// # Arguments
-    /// * `msg` - Message to print as a [str]
-    /// * `color` - Color to print with from the [Colors] enum
-    pub fn prompt(&mut self, msg: &str, color: Colors) -> String {
-        self.print(format!("{}: ", msg).as_str(), color);
-        self.readln().trim().to_string()
-    }
-
-    /// Prompts the user for input on a new line with color
-    /// 
-    /// # Arguments
-    /// * `msg` - Message to print as a [str]
-    /// * `color` - Color to print with from the [Colors] enum
-    pub fn promptln(&mut self, msg: &str, color: Colors) -> String {
-        self.println(format!("{}:", msg).as_str(), color);
-        self.readln().trim().to_string()
     }
 }
 
