@@ -117,7 +117,7 @@ impl Printer {
     }
 }
 
-const RESET: &'static [u8] = b"\x1b[0m";
+const RESET: &[u8] = b"\x1b[0m";
 
 /// Terminal Colors
 /// 
