@@ -214,7 +214,7 @@ pub struct Katana {
     /// Shurikens/Packages
     ///
     /// List of the [Shurikens](Shuriken) that the repository contains.
-    pub shurikens: Vec<Shuriken>
+    pub shurikens: Vec<String>
 }
 
 /// Maintainer of a repository
