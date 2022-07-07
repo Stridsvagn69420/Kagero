@@ -1,6 +1,6 @@
 [package]
 name = "kagero"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Stridsvagn69420 (https://github.com/Stridsvagn69420)"]
 description = "A cross-platform universal and easy to use package manager"
@@ -19,15 +19,18 @@ serde = { version = "1.0", features = ["derive"], optional = true }
 serde_json = { version = "1.0", optional = true }
 # Orochi Utils
 reqwest = { version = "0.11.11", optional = true }
-rusqlite = { version = "0.27.0", features = ["bundled"], optional = true }
 ftp = { version = "3.0.1", optional = true }
-ssh2 = { version = "0.9.3", optional = true}
+ssh2 = { version = "0.9.3", optional = true }
+git2 = { version = "0.14", optional = true }
+# Kagero Packages and Filesystem
+rusqlite = { version = "0.27.0", features = ["bundled"], optional = true }
 
 [features]
 default = ["printer", "orochi-repo"]
 printer = []
+runner = []
 orochi = ["serde", "serde_json"]
-orochi-repo = ["orochi", "reqwest", "ftp", "ssh2"]
+orochi-repo = ["orochi", "reqwest", "ftp", "ssh2", "git2"]
 
 [lib]
 name = "kagero"

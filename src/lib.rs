@@ -6,6 +6,12 @@
 pub mod printer;
 
 #[cfg(feature = "orochi")]
+/// Runner utilities
+/// 
+/// This module contains utilities for running shell commands.
+pub mod runner;
+
+#[cfg(feature = "orochi")]
 /// Orochi utilities
 /// 
 /// This module contains utilities for parsing metadata from an Orochi repository.
