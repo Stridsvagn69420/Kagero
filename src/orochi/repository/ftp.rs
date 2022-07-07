@@ -1,12 +1,15 @@
+use async_trait::async_trait;
 use reqwest::Url;
 use super::OrochiDownloader;
 use super::DownloadError;
-use crate::orochi::{Katana, Maintainer, Shuriken};
+use super::ParseError;
+use crate::orochi::{Katana, Shuriken};
 
 pub struct FtpDownloader {
 
 }
 
+#[async_trait]
 impl OrochiDownloader for FtpDownloader {
     /// Package Downloader
     fn download_package(&self, package: Shuriken) -> Result<Vec<u8>, DownloadError> {
@@ -14,32 +17,27 @@ impl OrochiDownloader for FtpDownloader {
     }
 
     /// Package URL Builder
-    fn package_url(&self, package: Shuriken) -> Url {
+    fn package_url(&self, package: Shuriken) -> Result<Url, ParseError> {
         unimplemented!("{}", package.hash.as_str())
     }
 
     /// Download a Shuriken from the repository.
-    fn download_shuriken(&self, name: &str) -> Result<Shuriken, DownloadError> {
+    async fn download_shuriken(&self, name: &str) -> Result<Vec<Shuriken>, DownloadError> {
         unimplemented!("{}", name)
     }
 
     /// Shuriken URL Builder.
-    fn shuriken_url(&self, name: &str) -> Url {
+    fn shuriken_url(&self, name: &str) -> Result<Url, ParseError> {
         unimplemented!("{}", name)
     }
 
     /// Base URL
-    fn base(&self) -> Url {
-        unimplemented!()
-    }
-
-    /// Maintainers
-    fn maintainers(&self) -> Vec<Maintainer> {
+    fn base(&self) -> Result<Url, ParseError> {
         unimplemented!()
     }
 
     /// Website
-    fn website(&self) -> Url {
+    fn website(&self) -> Result<Url, String> {
         unimplemented!()
     }
 

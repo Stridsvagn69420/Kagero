@@ -1,4 +1,5 @@
-use super::{Katana, Maintainer, Shuriken};
+use super::{Katana, Shuriken};
+use async_trait::async_trait;
 use reqwest::Url;
 
 /// FTP Repository implementation
@@ -24,10 +25,12 @@ pub use self::ssh::SshDownloader;
 /// A module featuring enums that represent errors.
 mod errors;
 pub use self::errors::DownloadError;
+pub use self::errors::ParseError;
 
 /// Downloader
 /// 
 /// Trait for downloaders.
+#[async_trait]
 pub trait OrochiDownloader {
     /// Download a package from the repository.
     /// 
@@ -37,32 +40,27 @@ pub trait OrochiDownloader {
     /// Package URL Builder
     ///
     /// Builds a URL for a package for the current system.
-    fn package_url(&self, package: Shuriken) -> Url;
+    fn package_url(&self, package: Shuriken) -> Result<Url, ParseError>;
 
     /// Download a Shuriken from the repository.
     /// 
     /// Attempts to download a package from the repository as a [String].
-    fn download_shuriken(&self, name: &str) -> Result<Shuriken, DownloadError>;
+    async fn download_shuriken(&self, name: &str) -> Result<Vec<Shuriken>, DownloadError>;
 
     /// Shuriken URL Builder
     /// 
     /// Builds a Shuriken URL.
-    fn shuriken_url(&self, name: &str) -> Url;
+    fn shuriken_url(&self, name: &str) -> Result<Url, ParseError>;
 
     /// Base URL
     /// 
     /// Returns the base URL for this repository as a [Url].
-    fn base(&self) -> Url;
-
-    /// Maintainers
-    /// 
-    /// Returns a list of maintainers for this repository as a [Vec<Maintainer>].
-    fn maintainers(&self) -> Vec<Maintainer>;
+    fn base(&self) -> Result<Url, ParseError>;
 
     /// Website
     /// 
-    /// Returns the website for this repository as a [Url].
-    fn website(&self) -> Url;
+    /// Returns the website for this repository as a [Url], optionally as a [String] if parsing fails.
+    fn website(&self) -> Result<Url, String>;
 
     /// New Downloader
     /// 
