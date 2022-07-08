@@ -18,6 +18,7 @@ exclude = ["/target", "/.vscode/", "/.github/", "/target/", "/SECURITY.md"]
 serde = { version = "1.0", features = ["derive"], optional = true }
 serde_json = { version = "1.0", optional = true }
 # Orochi Utils
+thiserror = { version "1.0", optional = true }
 reqwest = { version = "0.11.11", optional = true }
 url = { version = "2.2.2", optional = true }
 ftp = { version = "3.0.1", optional = true }
@@ -31,7 +32,7 @@ default = ["printer", "orochi-repo"]
 printer = []
 runner = []
 orochi = ["serde", "serde_json"]
-orochi-repo = ["orochi", "reqwest", "url", "ftp", "ssh2", "git2"]
+orochi-repo = ["orochi", "thiserror", "reqwest", "url", "ftp", "ssh2", "git2"]
 
 [lib]
 name = "kagero"
