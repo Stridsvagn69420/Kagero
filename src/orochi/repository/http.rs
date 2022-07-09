@@ -51,6 +51,7 @@ pub struct HttpDownloader {
     auth: HttpCredentials,
     http_client: Client,
     pub katana: Katana,
+    root: Url
 }
 
 impl HttpDownloader {
@@ -60,10 +61,11 @@ impl HttpDownloader {
     /// An error is thrown if the repository root URL in the [Katana Manifest](Katana) is not valid.
     pub fn new(katana: Katana, auth: HttpCredentials) -> Result<HttpDownloader, ParseError> {
         // Only the Repository Root has to be validated. The other URLs are for rich representation.
-        Url::parse(&katana.root)?;
+        let url = Url::parse(&katana.root)?;
         Ok(HttpDownloader {
             katana,
             auth,
+            root: url,
             http_client: Client::builder()
             .user_agent(concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION")))
             .min_tls_version(tls::Version::TLS_1_2)
@@ -74,9 +76,14 @@ impl HttpDownloader {
     /// Download Package
     /// 
     /// Downloads a package from the repository with set [Shuriken].
+    /// If it's a Git Package, it will just return the Shell Command in a Byte Array to clone the repository.
     /// Returns an [HttpError] if the request fails.
     pub async fn download_package(&self, shuriken: Shuriken) -> Result<(Vec<u8>, PackType), HttpError> {
         // TODO: Implement
+        // This function should download the package and return it as a Vec<u8> along with its package type so that you can do different things depending on it.
+        // It gets the URL for the Shuriken for the PackTypes and checks the scheme. If it's http(s), it will download them via HTTP.
+        // But if it starts with Git, it will check if it's standalone or with a tag/branch, parse everything and return a shell command string as a Byte Array.
+        // Actually writing to disk will be handled in the filesystem utils.
         unimplemented!("{}", shuriken.hash.as_str());
     }
 
@@ -95,7 +102,7 @@ impl HttpDownloader {
     /// Make sure that the [Katana's root URL](Katana) is valid.
     /// Note that Shuriken files are [Vectors](Vec) of [Shurikens](Shuriken).
     pub fn shuriken_url(&self, name: &str) -> Url {
-        Url::parse(&self.katana.root).unwrap()
+        self.root
         .join("shurikens/").unwrap()
         .join(
             &(name.to_string() + ".shuriken")
@@ -109,7 +116,7 @@ impl HttpDownloader {
     pub fn package_url(&self, shuriken: Shuriken) -> Url {
         match Url::parse(shuriken.path.as_str()) {
             // Create URL for Orochi URL if the URL is just a filename
-            Err(_) => Url::parse(&self.katana.root).unwrap()
+            Err(_) => self.root
             .join(shuriken.arch.as_ref()).unwrap()
             .join(shuriken.platform.as_ref()).unwrap()
             .join(shuriken.path.as_str()).unwrap(),
