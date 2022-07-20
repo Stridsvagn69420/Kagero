@@ -75,7 +75,27 @@ pub enum Platform {
     /// 
     /// Value for Linux-based operating systems,
     /// e.g. Arch Linux, Void Linux, Ubuntu, Linux Mint, etc.
-    Linux
+    Linux,
+
+    /// dragonfly
+    /// 
+    /// Value for DragonflyBSD.
+    Dragonfly,
+
+    /// freebsd
+    /// 
+    /// Value for FreeBSD.
+    FreeBSD,
+
+    /// openbsd
+    /// 
+    /// Value for OpenBSD.
+    OpenBSD,
+
+    /// netbsd
+    /// 
+    /// Value for NetBSD.
+    NetBSD
 }
 
 impl AsRef<str> for Platform {
@@ -85,7 +105,11 @@ impl AsRef<str> for Platform {
             Platform::Any => "any",
             Platform::Windows => "windows",
             Platform::MacOS => "macos",
-            Platform::Linux => "linux"
+            Platform::Linux => "linux",
+            Platform::Dragonfly => "dragonfly",
+            Platform::FreeBSD => "freebsd",
+            Platform::OpenBSD => "openbsd",
+            Platform::NetBSD => "netbsd"
         }
     }
 }

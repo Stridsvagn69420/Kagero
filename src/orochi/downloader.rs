@@ -82,9 +82,37 @@ impl HttpDownloader {
         // TODO: Implement
         // This function should download the package and return it as a Vec<u8> along with its package type so that you can do different things depending on it.
         // It gets the URL for the Shuriken for the PackTypes and checks the scheme. If it's http(s), it will download them via HTTP.
-        // But if it starts with Git, it will check if it's standalone or with a tag/branch, parse everything and return a shell command string as a Byte Array.
+        // But if it starts with Git, it will check if it's standalone or with a tag/branch, parse everything and return the Git-Url with the tag/branch seperated with a semicolon after as a Byte Array.
         // Actually writing to disk will be handled in the filesystem utils.
-        unimplemented!("{}", shuriken.hash.as_str());
+        let data: Vec<u8>;
+
+        if shuriken.path.starts_with("http+") {
+            // Download from set HTTP URL
+            let url = match Url::parse(&shuriken.path[5..]) {
+                Ok(url) => url,
+                Err(_) => return Err(HttpError::NotFound)
+            };
+            data = self.download_bytes(url).await?;
+        } else if shuriken.path.starts_with("git+") {
+            // "Download" the Git-URL and return it as a Byte Array
+            let url = String::from(&shuriken.path[4..]);
+            data = url.into_bytes();
+
+        } else if shuriken.path.starts_with("git:") {
+            // "Download" the Git-URL with a Branch or Tag and return it as a Byte Array
+            let comps: Vec<&str>  = shuriken.path[4..].split("+").collect();
+            let fmturl = match comps.get(1) {
+                Some(url) => format!("{};{}", url, comps[0]),
+                None => return Err(HttpError::NotFound)
+            };
+            data = fmturl.into_bytes();
+        } else {
+            // Download from the repository
+            let url = self.package_url(&shuriken);
+            data = self.download_bytes(url).await?;
+        }
+        Ok((data, shuriken.packtype))
+
     }
 
     /// Download Shuriken
@@ -112,8 +140,8 @@ impl HttpDownloader {
     /// Package URL-Builder
     /// 
     /// Builds the URL to download a package from HTTP.
-    /// Note that this is for the case that the `path` parameter is only a file and not a [Git] or HTTP URL.
-    pub fn package_url(&self, shuriken: Shuriken) -> Url {
+    /// Note that this is for the case that the `path` parameter is only a file and not a Git or HTTP URL.
+    pub fn package_url(&self, shuriken: &Shuriken) -> Url {
         match Url::parse(shuriken.path.as_str()) {
             // Create URL for Orochi URL if the URL is just a filename
             Err(_) => self.root
