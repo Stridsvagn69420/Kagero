@@ -1,8 +1,10 @@
-#[cfg(feature = "orochi-repo")]
+#[cfg(feature = "orochi-downloader")]
 /// Orochi Request Utilities
 /// 
 /// This module features utilities for interacting with an Orochi repository.
-pub mod repository;
+mod downloader;
+#[cfg(feature = "orochi-downloader")]
+pub use self::downloader::*;
 
 /// Orochi Metadata
 mod meta;
